@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import status from "http-status";
 import { ZodError } from "zod";
 import { Prisma } from "../../../generated/prisma";
+import { AppError } from "./AppError";
 
 
 const globalErrorHandler = (
@@ -36,11 +37,20 @@ const globalErrorHandler = (
         ];
     }
 
+    // ✅ Custom API Error
+    else if (error instanceof AppError) {
+        statusCode = error.statusCode;
+        message = error.message;
+        errorDetails = error.errorDetails;
+    }
+
     // ✅ Custom Error with Message
     else if (error instanceof Error) {
         message = error.message;
         errorDetails = [{ message: error.message }];
     }
+
+
 
     // ✅ Send Response
     res.status(statusCode).json({

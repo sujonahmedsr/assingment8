@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { customerController } from "./user.controller";
 import { validRequest } from "../../middlewares/validRequest";
-import { createCustomerValidation } from "./user.validation";
+import { createCustomerValidation, updateCustomerValidation } from "./user.validation";
 
 const router = Router()
 
@@ -11,8 +11,14 @@ router.post('/',
 )
 
 router.get('/', customerController.getAllCustomer)
+
 router.get('/:customerId', customerController.getSingleCustomer)
-router.patch('/:customerId', customerController.updateCustomer)
+
+router.patch('/:customerId',
+    validRequest(updateCustomerValidation),
+    customerController.updateCustomer
+)
+
 router.delete('/:customerId', customerController.deleteACustomer)
 
 export const customerRoutes = router

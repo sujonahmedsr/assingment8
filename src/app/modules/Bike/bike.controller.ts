@@ -28,7 +28,7 @@ const getSingleBike: RequestHandler = catchAsync(async (req, res) => {
     const { bikeId } = req.params
     const result = await bikeServices.getSingleBike(bikeId)
     sendRespose(res, {
-        statusCode: status.CREATED,
+        statusCode: status.OK,
         success: true,
         message: "Bike fetched successfully",
         data: result
@@ -39,7 +39,7 @@ const updateBike: RequestHandler = catchAsync(async (req, res) => {
     const { bikeId } = req.params
     const result = await bikeServices.updateBike(bikeId, req.body)
     sendRespose(res, {
-        statusCode: status.CREATED,
+        statusCode: status.OK,
         success: true,
         message: "Bike updated successfully",
         data: result
@@ -50,7 +50,7 @@ const deleteBike: RequestHandler = catchAsync(async (req, res) => {
     const { bikeId } = req.params
     const result = await bikeServices.deleteBike(bikeId)
     sendRespose(res, {
-        statusCode: status.CREATED,
+        statusCode: status.OK,
         success: true,
         message: "Bike deleted successfully",
         data: result

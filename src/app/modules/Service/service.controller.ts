@@ -35,6 +35,17 @@ const getSingleService: RequestHandler = catchAsync(async (req, res) => {
     })
 })
 
+const serviceCompleted: RequestHandler = catchAsync(async (req, res) => {
+    const { ServiceId } = req.params
+    const result = await serviceServices.serviceCompleted(ServiceId)
+    sendRespose(res, {
+        statusCode: status.OK,
+        success: true,
+        message: "Service updated successfully",
+        data: result
+    })
+})
+
 const updateService: RequestHandler = catchAsync(async (req, res) => {
     const { ServiceId } = req.params
     const result = await serviceServices.updateService(ServiceId, req.body)
@@ -61,6 +72,7 @@ export const ServiceController = {
     ServiceCreate,
     getAllServices,
     getSingleService,
+    serviceCompleted,
     updateService,
     deleteService
 }

@@ -4,13 +4,13 @@ import { AppError } from "../../middlewares/AppError";
 import status from "http-status";
 
 const serviceCreateIntoDb = async (payload: ServiceRecord) => {
-    const bikeData = await prisma.bike.findUnique({
+    const ServiceData = await prisma.bike.findUnique({
         where: {
             bikeId: payload.bikeId
         }
     })
 
-    if (!bikeData) {
+    if (!ServiceData) {
         throw new AppError(status.NOT_FOUND, "Bike Not Found.")
     }
 
@@ -26,35 +26,65 @@ const getAllServices = async () => {
 }
 
 const getSingleService = async (id: string) => {
+    
+    
     const result = await prisma.serviceRecord.findUnique({
         where: {
             serviceId: id
         }
     })
+
     if (!result) {
-        throw new AppError(status.NOT_FOUND, "Bike not found.");
+        throw new AppError(status.NOT_FOUND, "Service not found.");
     }
+
     return result
 }
 
-const updateService = async (id: string, data: Partial<ServiceRecord>) => {
+const serviceCompleted = async (id: string) => {
     const result = await prisma.$transaction(async (tx) => {
-        // ✅ Check if Bike exists
-        const existingBike = await tx.serviceRecord.findUnique({
+        // ✅ Check if Service exists
+        const existingService = await tx.serviceRecord.findUnique({
             where: { serviceId: id },
         });
 
-        if (!existingBike) {
-            throw new AppError(status.NOT_FOUND, "Bike not found.");
+        if (!existingService) {
+            throw new AppError(status.NOT_FOUND, "Service not found.");
         }
 
-        // ✅ Update Bike
-        const updatedBike = await tx.serviceRecord.update({
+        // ✅ Update Service
+        const updatedService = await tx.serviceRecord.update({
+            where: { serviceId: id },
+            data: {
+                completionDate: new Date()
+            },
+        });
+
+        return updatedService;
+    });
+
+    return result;
+}
+
+
+const updateService = async (id: string, data: Partial<ServiceRecord>) => {
+    const result = await prisma.$transaction(async (tx) => {
+        // ✅ Check if Service exists
+        const existingService = await tx.serviceRecord.findUnique({
+            where: { serviceId: id },
+        });
+
+        if (!existingService) {
+            throw new AppError(status.NOT_FOUND, "Service not found.");
+        }
+
+        // ✅ Update Service
+        const updatedService = await tx.serviceRecord.update({
             where: { serviceId: id },
             data,
         });
 
-        return updatedBike;
+        return updatedService;
     });
 
     return result;
@@ -62,25 +92,25 @@ const updateService = async (id: string, data: Partial<ServiceRecord>) => {
 
 const deleteService = async (id: string) => {
     await prisma.$transaction(async (tx) => {
-        // Check if the Bike exists
-        const existingBike = await tx.serviceRecord.findUnique({
+        // Check if the Service exists
+        const existingService = await tx.serviceRecord.findUnique({
             where: {
                 serviceId: id,
             },
         });
 
-        if (!existingBike) {
-            throw new AppError(status.NOT_FOUND, "Bike not found.");
+        if (!existingService) {
+            throw new AppError(status.NOT_FOUND, "Service not found.");
         }
 
-        // Delete Bike
-        const deletedBike = await tx.serviceRecord.delete({
+        // Delete Service
+        const deletedService = await tx.serviceRecord.delete({
             where: {
                 serviceId: id,
             },
         });
 
-        return deletedBike;
+        return deletedService;
     });
 }
 
@@ -88,6 +118,7 @@ export const serviceServices = {
     serviceCreateIntoDb,
     getAllServices,
     getSingleService,
+    serviceCompleted,
     updateService,
     deleteService
 }

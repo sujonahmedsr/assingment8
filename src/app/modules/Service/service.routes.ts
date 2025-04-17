@@ -7,6 +7,8 @@ router.post('/',  ServiceController.ServiceCreate)
 
 router.get('/', ServiceController.getAllServices)
 
+router.get('/status', ServiceController.serviceStatus)
+
 router.get('/:ServiceId', ServiceController.getSingleService)
 
 router.put('/:ServiceId/complete',  ServiceController.serviceCompleted)

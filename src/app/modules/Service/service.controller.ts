@@ -41,7 +41,7 @@ const serviceCompleted: RequestHandler = catchAsync(async (req, res) => {
     sendRespose(res, {
         statusCode: status.OK,
         success: true,
-        message: "Service updated successfully",
+        message: "Service marked as completed",
         data: result
     })
 })
@@ -68,11 +68,22 @@ const deleteService: RequestHandler = catchAsync(async (req, res) => {
     })
 })
 
+const serviceStatus: RequestHandler = catchAsync(async (req, res) => {
+    const result = await serviceServices.serviceStatus()
+    sendRespose(res, {
+        statusCode: status.OK,
+        success: true,
+        message: "Overdue or pending services fetched successfully",
+        data: result
+    })
+})
+
 export const ServiceController = {
     ServiceCreate,
     getAllServices,
     getSingleService,
     serviceCompleted,
     updateService,
-    deleteService
+    deleteService,
+    serviceStatus
 }

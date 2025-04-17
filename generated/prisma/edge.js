@@ -151,7 +151,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\PHB9\\Level2\\ASSINGMENT\\assingment-8\\generated\\prisma",
+      "value": "C:\\Users\\AS\\Downloads\\assingment8-main\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -165,11 +165,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\PHB9\\Level2\\ASSINGMENT\\assingment-8\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\AS\\Downloads\\assingment8-main\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -179,11 +179,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:98769363@localhost:5432/mydb?schema=public"
+        "value": null
       }
     }
   },

@@ -1,7 +1,7 @@
 import status from "http-status";
-import { Customer } from "../../../../generated/prisma";
 import { AppError } from "../../middlewares/AppError";
 import prisma from "../../utils/prisma";
+import { Customer } from "@prisma/client";
 
 const customerCreateIntoDb = async (payload: Customer) => {
     const { name, email, phone } = payload;
